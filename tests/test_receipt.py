@@ -1,8 +1,8 @@
 from src.model.receipt import Receipt
 from src.model.receipt_builder import ReceiptBuilder
+from src.model.client import Client
 
 import pytest
-import requests
 
 @pytest.fixture()
 def receipt():
@@ -24,8 +24,8 @@ def bad_receipt_data():
 @pytest.fixture()
 def receipts():
     # get the restaurant receipt data from the api
-    response = requests.get("https://data.texas.gov/resource/naix-2893.json?location_name=MAX%27S%20WINE%20DIVE")
-    restaurant_receipts = response.json()
+    api_url = "https://data.texas.gov/resource/naix-2893.json?location_name=MAX%27S%20WINE%20DIVE"
+    restaurant_receipts = Client.json_response(api_url)
 
     # create a list of receipt objects
     receipts = ReceiptBuilder.receipts(restaurant_receipts)
